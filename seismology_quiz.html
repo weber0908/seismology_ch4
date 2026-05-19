@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動地震學教室</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #34495e;
+            --success: #27ae60;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent);
+        }
+        .theme-tag {
+            background: #edf2f7;
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        .options {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .option-btn {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-btn:hover {
+            background: #edf2f7;
+            border-color: var(--primary);
+        }
+        .option-btn.correct {
+            background: #edf7ed;
+            border-color: var(--success);
+            color: var(--success);
+            font-weight: bold;
+        }
+        .explanation {
+            background: #fffaf0;
+            border: 1px dashed var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        .explanation-title {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .visual-box {
+            text-align: center;
+            margin: 15px 0;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        /* SVG 動畫樣式 */
+        .p-wave-particle {
+            animation: pAnim 1.2s infinite ease-in-out;
+        }
+        .s-wave-particle {
+            animation: sAnim 1.5s infinite ease-in-out;
+        }
+        @keyframes pAnim {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(15px); }
+        }
+        @keyframes sAnim {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(15px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>地震學互動教室 🌍</h1>
+        <p>跟著地震學導師，用最簡單的方式看懂地球的震動！</p>
+    </header>
+
+    <div class="quiz-card" id="q1">
+        <span class="theme-tag">主題一：地震波的傳播</span>
+        <h2>Q1：當地震發生時，哪一種地震波會最先到達地震測站？</h2>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer('q1', false)">A) S波（剪力波）</button>
+            <button class="option-btn" onclick="checkAnswer('q1', true)">B) P波（實體波/縱波）</button>
+            <button class="option-btn" onclick="checkAnswer('q1', false)">C) 表面波（雷利波）</button>
+        </div>
+        <div class="explanation">
+            <div class="explanation-title">💡 導師精彩解析：</div>
+            <p><strong>正確答案：B) P波</strong></p>
+            <p><strong>淺顯易懂舉例：</strong> 
+               把 P波 想像成列車啟動時「車廂前後猛烈碰撞」的推力，傳播速度最快（Primary Wave）；而 S波 則是像「一條被上下甩動的繩子」（Secondary Wave），速度較慢。
+            </p>
+            
+            <div class="visual-box">
+                <strong>【動態傳播示意圖】</strong><br><br>
+                <svg width="100%" height="100" viewBox="0 0 400 100">
+                    <text x="10" y="30" fill="#2c3e50" font-weight="bold">P波 (前後推擠):</text>
+                    <g fill="#e67e22">
+                        <circle cx="150" cy="25" r="6" class="p-wave-particle" style="animation-delay: 0s;"/>
+                        <circle cx="180" cy="25" r="6" class="p-wave-particle" style="animation-delay: 0.2s;"/>
+                        <circle cx="210" cy="25" r="6" class="p-wave-particle" style="animation-delay: 0.4s;"/>
+                        <circle cx="240" cy="25" r="6" class="p-wave-particle" style="animation-delay: 0.6s;"/>
+                    </g>
+                    <text x="10" y="75" fill="#2c3e50" font-weight="bold">S波 (上下搖擺):</text>
+                    <g fill="#27ae60">
+                        <circle cx="150" cy="70" r="6" class="s-wave-particle" style="animation-delay: 0s;"/>
+                        <circle cx="180" cy="70" r="6" class="s-wave-particle" style="animation-delay: 0.3s;"/>
+                        <circle cx="210" cy="70" r="6" class="s-wave-particle" style="animation-delay: 0.6s;"/>
+                        <circle cx="240" cy="70" r="6" class="s-wave-particle" style="animation-delay: 0.9s;"/>
+                    </g>
+                </svg>
+            </div>
+            <p>因為 P波 速度最快，所以它總是第一個到測站打卡喔！</p>
+        </div>
+    </div>
+
+    <div class="quiz-card" id="q2">
+        <span class="theme-tag">主題二：地球構造與波速</span>
+        <h2>Q2：為什麼 S波（剪力波）無法穿過地球的「外地核」？</h2>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer('q2', false)">A) 因為外地核壓力太高了</button>
+            <button class="option-btn" onclick="checkAnswer('q2', true)">B) 因為外地核是液體，液體無法承受剪力</button>
+            <button class="option-btn" onclick="checkAnswer('q2', false)">C) 因為外地核含有太多黃金</button>
+        </div>
+        <div class="explanation">
+            <div class="explanation-title">💡 導師精彩解析：</div>
+            <p><strong>正確答案：B) 外地核是液體</strong></p>
+            <p><strong>淺顯易懂舉例：</strong>
+               你有試過用手去「剪斷」或「扭轉」一灘水嗎？沒辦法對吧！S波的傳播需要靠物質的「剛性」（扭曲後彈回原狀的能力）。因為外地核是融化的液態鐵鎳，它就像一灘水，沒辦法傳遞這種「扭曲搖擺」的剪切力量，所以 S波 走到這裡就會被完全擋住，形成著名的「S波陰影帶」。
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkAnswer(cardId, isCorrect) {
+        const card = document.getElementById(cardId);
+        const explanation = card.querySelector('.explanation');
+        const buttons = card.querySelectorAll('.option-btn');
+        
+        // 顯示解析
+        explanation.style.display = 'block';
+        
+        // 標示正確按鈕
+        buttons.forEach(btn => {
+            if (btn.innerText.includes('B)') && cardId === 'q1') btn.classList.add('correct');
+            if (btn.innerText.includes('B)') && cardId === 'q2') btn.classList.add('correct');
+        });
+    }
+</script>
+
+</body>
+</html>
